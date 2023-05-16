@@ -18,18 +18,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[mycat存储按月分表]]></title>
-    <url>%2F2019%2F12%2F03%2Fmycat%E5%AD%98%E5%82%A8%E6%8C%89%E6%9C%88%E5%88%86%E8%A1%A8%2F</url>
-    <content type="text"><![CDATA[这里简单分享用Mycat按月进行单库分表，从建表、配置到数据插入mycat官网地址：http://mycat.io/ 建表 先创建一年的12个月表 12345678910111213141516171819CREATE TABLE `msg_20191` ( `id` int(11) NOT NULL AUTO_INCREMENT, `is_delete` tinyint(2) NOT NULL DEFAULT '0', `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, `msg_id` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;CREATE TABLE `msg_20192` ( `id` int(11) NOT NULL AUTO_INCREMENT, `is_delete` tinyint(2) NOT NULL DEFAULT '0', `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP, `gmt_modify` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, `msg_id` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;... 配置 配置分表规则rule.xml 123456789101112131415161718&lt;!DOCTYPE mycat:rule SYSTEM "rule.dtd"&gt;&lt;mycat:rule xmlns:mycat="http://io.mycat/"&gt; &lt;!-- 指定分片列和算法 --&gt; &lt;tableRule name="sharding-by-month"&gt; &lt;rule&gt; &lt;columns&gt;gmt_create&lt;/columns&gt; &lt;algorithm&gt;partbymonth&lt;/algorithm&gt; &lt;/rule&gt; &lt;/tableRule&gt; &lt;!-- 指定分片函数 --&gt; &lt;function name="partbymonth" class="io.mycat.route.function.PartitionByMonth"&gt; &lt;property name="dateFormat"&gt;yyyy-MM-dd&lt;/property&gt; &lt;property name="sBeginDate"&gt;2019-01-01&lt;/property&gt; &lt;/function&gt;&lt;/mycat:rule&gt; 配置schema.xml 1234567891011121314151617&lt;?xml version="1.0"?&gt;&lt;!DOCTYPE mycat:schema SYSTEM "schema.dtd"&gt;&lt;mycat:schema xmlns:mycat="http://io.mycat/"&gt; &lt;schema name="sharding" checkSQLschema="false" sqlMaxLimit="100"&gt; &lt;table name="msg" subTables="msg_2019$01-12" dataNode="dn1" rule="sharding-by-month" /&gt; &lt;/schema&gt; &lt;dataNode name="dn1" dataHost="dataHost01" database="sharding"/&gt; &lt;dataHost name="dataHost01" maxCon="1000" minCon="10" balance="0" writeType="0" dbType="mysql" dbDriver="native"&gt; &lt;heartbeat&gt;select 1&lt;/heartbeat&gt; &lt;writeHost host="hostM1" url="127.0.0.1:3306" user="root" password="root"/&gt; &lt;/dataHost&gt; &lt;/mycat:schema&gt; 配置server.xml的登陆用户密码 123456....&lt;user name="root"&gt; &lt;property name="password"&gt;123456&lt;/property&gt; &lt;property name="schemas"&gt;sharding&lt;/property&gt; &lt;/user&gt;... 数据插入并查看 启动mycat，连接上并插入数据如下图所示 本文地址 http://www.franciszhang.cn/2019/12/03/mycat存储按月分表/]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>分库分表</tag>
-        <tag>mycat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[wedding day video]]></title>
     <url>%2F2019%2F11%2F01%2Fwedding-day-video%2F</url>
     <content type="text"><![CDATA[2019.10.09 wedding day video 本文地址 http://www.franciszhang.cn/2019/11/01/wedding-day-video/]]></content>
