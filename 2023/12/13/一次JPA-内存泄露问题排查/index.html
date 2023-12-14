@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://www.franciszhang.cn/images/jpa3.png">
 <meta property="og:image" content="http://www.franciszhang.cn/images/jpa4.png">
 <meta property="og:image" content="http://www.franciszhang.cn/images/jpa5.png">
-<meta property="og:updated_time" content="2023-12-13T09:48:20.968Z">
+<meta property="og:updated_time" content="2023-12-14T08:11:48.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次JPA 内存泄露问题排查">
 <meta name="twitter:description" content="机器：2C4G 程序：用户同步程序 现象：2023.9.15～2023.9.18之间，只要启动全量同步，10分钟内就会发生内存泄漏  排查： 1.代码查看。经查看，代码有Map引用，用于数据比较，使用后并清除，正常 2.线程排查。经查看，线程只启动了3个同步线程，线程正常范围 3.使用jmap 查看内存分布  jmap -histo:live 16372 &amp;gt; 16372.txt 主要对象是h">
@@ -475,7 +475,7 @@
 <li>结果如下图，也无内存溢出</li>
 </ul>
 <p><img src="http://www.franciszhang.cn/images/jpa4.png" alt="uploaded!"></p>
-<p><img src="http://www.franciszhang.cn/images/jpa5.png" alt="uploaded!"></p>
+<p><img src="http://www.franciszhang.cn/images/jpa5.png" alt="overwrote existing file"></p>
 <p>本文地址 <a href="http://www.franciszhang.cn/2023/12/13/一次JPA-内存泄露问题排查/">http://www.franciszhang.cn/2023/12/13/一次JPA-内存泄露问题排查/</a> </p>
 
       
